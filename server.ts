@@ -203,12 +203,12 @@ export class RESTConnectorBot {
 }
 
 //=========================================================
-// SET UP BOT
+// EXAMPLE BOT
 //=========================================================
 
 let ProofOfConceptAppId: string = '5d3dc081-7572-4783-a385-e1a6f0afd179'
 let ProofOfConceptAppPassword: string = '0C5L7PkvFhDQz1VvxDJoPdT'
-let RESTBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
+let POCBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
 
 let messageHandler : MessagingHandler = (userInput: string) => {
     let reply: string;
@@ -221,8 +221,8 @@ let messageHandler : MessagingHandler = (userInput: string) => {
 }
 
 
-RESTBot.initialize();
-RESTBot.run(messageHandler);
+POCBot.initialize();
+POCBot.run(messageHandler);
 
 //=========================================================
 // SET UP RESTIFY SERVER
