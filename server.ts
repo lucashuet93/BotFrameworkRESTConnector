@@ -72,17 +72,17 @@ export class RESTConnectorBot {
     appId: string;
     appPassword: string;
     accessToken: string;
-    messagingHandler: MessagingHandler
+    messagingHandler: MessagingHandler;
 
     constructor(appId: string, appPassword: string) {
         this.appId = appId;
-        this.appId = appPassword;
+        this.appPassword = appPassword;
     }
 
     initialize = () => {
         //sets the access token so the class can send and receive Activities from the connector
         const tokenUrl = `https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token`;
-        const tokenBody = `grant_type=client_credentials&client_id=${ProofOfConceptAppId}&client_secret=${ProofOfConceptAppPassword}&scope=https://api.botframework.com/.default`
+        const tokenBody = `grant_type=client_credentials&client_id=${this.appId}&client_secret=${this.appPassword}&scope=https://api.botframework.com/.default`
         const tokenConfig = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -92,6 +92,7 @@ export class RESTConnectorBot {
         axios.post(tokenUrl, tokenBody, tokenConfig)
             .then((res) => {
                 this.accessToken = res.data.access_token;
+                console.log(this.accessToken)
             })
             .catch((err) => {
                 console.log(err)
