@@ -242,7 +242,7 @@ server.listen(port, () => {
 /* 
 
 1) Register a bot in the Bot Framework Portal and store the AppId and AppPassword
-2) Create a new project and install prague-botframework-connector and restify dependencies
+2) Create a new project and install PACKAGE_NAME and restify dependencies
 2) Import RESTConnectorBot class
 3) Create a RESTConnectorBot instance using the bot's AppId and AppPassword 
 4) Create a restify server 
@@ -250,4 +250,5 @@ server.listen(port, () => {
 6) Deploy the bot to an Azure App Service
 7) Register the endpoint of that Azure App Service with the bot back in the Bot Framework Portal
 
+You will then be able to communicate with your bot on any Bot Framework supported channel like Microsoft Teams, Skype, or Facebook Messenger
 */
