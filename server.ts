@@ -34,6 +34,24 @@ export interface Message extends Activity {
     }
 }
 
+export interface TextReply {
+    type: "message",
+    from: {
+        id: string,
+        name: string
+    },
+    conversation: {
+        id: string,
+        name: string
+    },
+    recipient: {
+        id: string,
+        name: string
+    },
+    text: string,
+    replyToId: string
+}
+
 export interface MemberEntersConversation extends Activity {
     membersAdded: {
         id: string,
@@ -69,7 +87,6 @@ export class RESTConnectorBot {
         axios.post(tokenUrl, tokenBody, tokenConfig)
             .then((res) => {
                 this.accessToken = res.data.access_token;
-                console.log(this.accessToken)
             })
             .catch((err) => {
                 console.log(err)
@@ -78,8 +95,44 @@ export class RESTConnectorBot {
 
     listen = (req: Request, res: Response) => {
         if(req.body.text){
-            console.log('Found a message')
+            this.replyToMessage(req.body)
         }
+    }
+
+    replyToMessage = (activity: Message) => {
+        //method takes in the activity, parses out relevant fields and sends them into this.appRules.message
+        //this.appRules.message will return some text that is sent back to the user 
+
+        let replyURL = activity.serviceUrl.concat(`/v3/conversations/${activity.conversation.id}/activities/${activity.id}`)
+        let reply: {} = {
+            type: "message",
+            from: {
+                id: activity.recipient.id,
+                name: activity.recipient.name
+            },
+            conversation: {
+                id: activity.conversation.id,
+                name: activity.conversation.id
+            },
+            recipient: {
+                id: activity.from.id,
+                name: activity.from.name
+            },
+            text: `You just said ${activity.text}!`,
+            replyToId: activity.id
+        }
+        const authorizedConfig = {
+            headers: {
+                "Authorization": `Bearer ${this.accessToken}`
+            },
+        };
+        axios.post(replyURL, reply, authorizedConfig)
+            .then((res) => {
+                // console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 }
 
