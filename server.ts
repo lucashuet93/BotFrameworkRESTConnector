@@ -58,6 +58,7 @@ RESTBot.initialize();
 //=========================================================
 // SET UP RESTIFY SERVER
 //=========================================================
+
 let port: any = process.env.PORT || process.env.port || 3978;
 var server: Server = restify.createServer();
 server.use(restify.plugins.bodyParser());
@@ -65,3 +66,19 @@ server.post('/api/messages', RESTBot.listen)
 server.listen(port, () => {
     console.log(`Restify server running on ${server.url}`);
 });
+
+//=========================================================
+// STEPS TO RUN A REST CONNECTOR BOT
+//=========================================================
+/* 
+
+1) Register a bot in the Bot Framework Portal and store the AppId and AppPassword
+2) Create a new project and install prague-botframework-connector and restify dependencies
+2) Import RESTConnectorBot class
+3) Create a RESTConnectorBot instance using the bot's AppId and AppPassword 
+4) Create a restify server 
+5) On post requests to the restify server's /api/messages endpoint, run the RESTConnectorBot.listen method 
+6) Deploy the bot to an Azure App Service
+7) Register the endpoint of that Azure App Service with the bot back in the Bot Framework Portal
+
+*/
