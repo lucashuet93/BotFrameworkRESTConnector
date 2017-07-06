@@ -205,8 +205,20 @@ export class RESTConnectorBot {
 let ProofOfConceptAppId: string = '5d3dc081-7572-4783-a385-e1a6f0afd179'
 let ProofOfConceptAppPassword: string = '0C5L7PkvFhDQz1VvxDJoPdT'
 let RESTBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
-RESTBot.initialize();
 
+let messageHandler : MessagingHandler = (userInput: string) => {
+    let reply: string;
+    if(userInput.includes("color")){
+        reply = "My favorite color is blue. What's yours?"
+    } else {
+        reply = "I'm sorry, I don't understand."
+    }
+    return reply;
+}
+
+
+RESTBot.initialize();
+RESTBot.run(messageHandler);
 
 //=========================================================
 // SET UP RESTIFY SERVER
