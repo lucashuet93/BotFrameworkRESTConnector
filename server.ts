@@ -14,6 +14,7 @@ export class RESTConnectorBot {
 
     appId: string;
     appPassword: string;
+    accessToken: string;
 
     constructor(appId: string, appPassword: string) {
         this.appId = appId;
@@ -25,13 +26,16 @@ export class RESTConnectorBot {
 }
 
 //=========================================================
-// SETUP RESTIFY SERVER
+// SET UP BOT
 //=========================================================
 
 let ProofOfConceptAppId: string = '5d3dc081-7572-4783-a385-e1a6f0afd179'
 let ProofOfConceptAppPassword: string = '0C5L7PkvFhDQz1VvxDJoPdT'
 let RESTBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
 
+//=========================================================
+// SET UP RESTIFY SERVER
+//=========================================================
 let port: any = process.env.PORT || process.env.port || 3978;
 var server: Server = restify.createServer();
 server.use(restify.plugins.bodyParser());
