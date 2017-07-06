@@ -59,6 +59,10 @@ export interface MemberEntersConversation extends Activity {
     }[]
 }
 
+export interface MessagingHandler {
+    (userInput: string) : string
+}
+
 //=========================================================
 // REST CONNECTOR BOT
 //=========================================================
@@ -68,6 +72,7 @@ export class RESTConnectorBot {
     appId: string;
     appPassword: string;
     accessToken: string;
+    messagingHandler: MessagingHandler
 
     constructor(appId: string, appPassword: string) {
         this.appId = appId;
@@ -91,6 +96,10 @@ export class RESTConnectorBot {
             .catch((err) => {
                 console.log(err)
             })
+    }
+
+    run(handler: MessagingHandler){
+        this.messagingHandler = handler;
     }
 
     listen = (req: Request, res: Response) => {
@@ -197,6 +206,7 @@ let ProofOfConceptAppId: string = '5d3dc081-7572-4783-a385-e1a6f0afd179'
 let ProofOfConceptAppPassword: string = '0C5L7PkvFhDQz1VvxDJoPdT'
 let RESTBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
 RESTBot.initialize();
+
 
 //=========================================================
 // SET UP RESTIFY SERVER
