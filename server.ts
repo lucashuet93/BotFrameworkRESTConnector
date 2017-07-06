@@ -166,6 +166,9 @@ export class RESTConnectorBot {
         //this.appRules.message will return some text that is sent back to the user 
 
         let replyURL = activity.serviceUrl.concat(`/v3/conversations/${activity.conversation.id}/activities/${activity.id}`)
+        
+        let replyMessage = this.messagingHandler(activity.text);
+
         let reply: {} = {
             type: "message",
             from: {
@@ -180,7 +183,7 @@ export class RESTConnectorBot {
                 id: activity.from.id,
                 name: activity.from.name
             },
-            text: `You just said ${activity.text}!`,
+            text: replyMessage,
             replyToId: activity.id
         }
         const authorizedConfig = {
