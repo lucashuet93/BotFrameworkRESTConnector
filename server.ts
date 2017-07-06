@@ -94,9 +94,62 @@ export class RESTConnectorBot {
     }
 
     listen = (req: Request, res: Response) => {
-        if(req.body.text){
-            this.replyToMessage(req.body)
+        // TYPES OF ACTIVITES
+        // 1. conversationUpdate (get a membersAdded property here)
+        // 2. message
+
+        if (req.body.type) {
+            switch (req.body.type) {
+                case 'conversationUpdate':
+                    this.replyToConversationUpdate(req.body);
+                    break;
+                case 'message':
+                    this.replyToMessage(req.body);
+                    break;
+                default:
+                    console.log('not an activity');
+                    break;
+
+            }
+        } else {
+            console.log('not an activity')
         }
+    }
+
+    replyToConversationUpdate = (activity: MemberEntersConversation) => {
+        //method takes in the activity, parses out relevant fields and sends them into this.appRules.event
+        //this.appRules.event will return some text that is sent back to the user 
+
+        let replyURL = activity.serviceUrl.concat(`/v3/conversations/${activity.conversation.id}/activities/${activity.id}`)
+        let reply: {} = {
+            type: "message",
+            from: {
+                id: activity.recipient.id,
+                name: activity.recipient.name
+            },
+            conversation: {
+                id: activity.conversation.id,
+                name: activity.conversation.id
+            },
+            recipient: {
+                id: activity.from.id,
+                name: activity.from.id
+            },
+            text: `${activity.membersAdded[0].name} has entered the conversation`,
+            replyToId: activity.id
+        }
+        const authorizedConfig = {
+            headers: {
+                "Authorization": `Bearer ${this.accessToken}`
+            },
+        };
+        axios.post(replyURL, reply, authorizedConfig)
+            .then((res) => {
+                // console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     replyToMessage = (activity: Message) => {
