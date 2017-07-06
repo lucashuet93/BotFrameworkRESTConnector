@@ -7,6 +7,41 @@ import axios from 'axios';
 import { Request, Response, Server } from 'restify'
 
 //=========================================================
+// INTERFACES
+//=========================================================
+
+export interface Activity {
+    type: string,
+    id: string,
+    timestamp: string,
+    serviceUrl: string,
+    channelId: string,
+    from: { id: string },
+    conversation: { id: string },
+    recipient: {
+        id: string,
+        name: string
+    },
+}
+
+export interface Message extends Activity {
+    text: string,
+    locale: string,
+    textFormat: string,
+    from: {
+        id: string,
+        name: string
+    }
+}
+
+export interface MemberEntersConversation extends Activity {
+    membersAdded: {
+        id: string,
+        name: string
+    }[]
+}
+
+//=========================================================
 // REST CONNECTOR BOT
 //=========================================================
 
@@ -42,7 +77,9 @@ export class RESTConnectorBot {
     }
 
     listen = (req: Request, res: Response) => {
-        console.log(req)
+        if(req.body.text){
+            console.log('Found a message')
+        }
     }
 }
 
