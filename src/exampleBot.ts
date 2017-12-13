@@ -10,8 +10,8 @@ import { RESTConnectorBot, MessagingHandler } from './connector'
 // EXAMPLE BOT
 //=========================================================
 
-let ProofOfConceptAppId: string = '5d3dc081-7572-4783-a385-e1a6f0afd179'
-let ProofOfConceptAppPassword: string = '0C5L7PkvFhDQz1VvxDJoPdT'
+let ProofOfConceptAppId: string = 'bd5cba79-e44b-4f97-b480-ce6803d74caf'
+let ProofOfConceptAppPassword: string = 'mkbIXCU37}drndCSD864(__'
 let POCBot = new RESTConnectorBot(ProofOfConceptAppId, ProofOfConceptAppPassword);
 
 let messageHandler : MessagingHandler = (userInput: string) => {

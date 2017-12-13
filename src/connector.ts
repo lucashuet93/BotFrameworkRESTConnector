@@ -94,7 +94,7 @@ export class RESTConnectorBot {
                 this.accessToken = res.data.access_token;
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err.response.data)
             })
     }
 
